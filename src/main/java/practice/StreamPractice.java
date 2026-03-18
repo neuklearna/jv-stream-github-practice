@@ -24,6 +24,7 @@ public class StreamPractice {
                 .mapToInt(n -> Integer.parseInt(n))
                 .filter(n -> n % 2 == 0)
                 .min();
+
         return result.orElseThrow(() ->
                 new RuntimeException("Can't get min value from list: " + numbers));
     }
@@ -39,6 +40,7 @@ public class StreamPractice {
                 .map(i -> i % 2 != 0 ? numbers.get(i) - 1 : numbers.get(i))
                 .filter(n -> n % 2 == 1)
                 .average();
+
         return result.orElseThrow(NoSuchElementException::new);
     }
 
@@ -56,6 +58,7 @@ public class StreamPractice {
                         && n.getAge() <= toAge
                         && n.getSex().equals(Person.Sex.MAN))
                 .collect(Collectors.toList());
+
         return result;
     }
 
@@ -72,8 +75,8 @@ public class StreamPractice {
     public List<Person> getWorkablePeople(int fromAge, int femaleToAge,
                                           int maleToAge, List<Person> peopleList) {
         List<Person> result = peopleList.stream()
-                .filter(n -> n.getSex() == Person.Sex.MAN && n.getAge() >= fromAge
-                        && n.getAge() <= maleToAge || n.getSex() == Person.Sex.WOMAN
+                .filter(n -> n.getSex().equals(Person.Sex.MAN)&& n.getAge() >= fromAge
+                        && n.getAge() <= maleToAge || n.getSex().equals(Person.Sex.WOMAN)
                         && n.getAge() >= fromAge && n.getAge() <= femaleToAge)
                 .collect(Collectors.toList());
 
@@ -87,7 +90,7 @@ public class StreamPractice {
      */
     public List<String> getCatsNames(List<Person> peopleList, int femaleAge) {
         List<String> result = peopleList.stream()
-                .filter(n -> n.getSex() == Person.Sex.WOMAN && n.getAge() >= femaleAge)
+                .filter(n -> n.getSex().equals(Person.Sex.WOMAN)&& n.getAge() >= femaleAge)
                 .flatMap(n -> n.getCats().stream())
                 .map(n -> n.getName())
                 .collect(Collectors.toList());
