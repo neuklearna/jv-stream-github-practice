@@ -1,11 +1,13 @@
 package practice;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import model.Candidate;
-import model.Cat;
 import model.Person;
 
 public class StreamPractice {
@@ -33,7 +35,7 @@ public class StreamPractice {
     public Double getOddNumsAverage(List<Integer> numbers) {
 
         OptionalDouble result = IntStream.range(0, numbers.size())
-                .map(i -> i % 2 != 0 ? numbers.get(i) -1 : numbers.get(i))
+                .map(i -> i % 2 != 0 ? numbers.get(i) - 1 : numbers.get(i))
                 .filter(n -> n % 2 == 1)
                 .average();
         return result.orElseThrow(NoSuchElementException::new);
@@ -49,7 +51,9 @@ public class StreamPractice {
      */
     public List<Person> selectMenByAge(List<Person> peopleList, int fromAge, int toAge) {
         List<Person> result = peopleList.stream()
-                .filter(n -> n.getAge() >= fromAge && n.getAge() <= toAge && n.getSex().equals(Person.Sex.MAN))
+                .filter(n -> n.getAge() >= fromAge
+                        && n.getAge() <= toAge
+                        && n.getSex().equals(Person.Sex.MAN))
                 .collect(Collectors.toList());
         return result;
     }
@@ -67,7 +71,9 @@ public class StreamPractice {
     public List<Person> getWorkablePeople(int fromAge, int femaleToAge,
                                           int maleToAge, List<Person> peopleList) {
         List<Person> result = peopleList.stream()
-                .filter(n -> n.getSex() == Person.Sex.MAN && n.getAge() >= fromAge && n.getAge() <= maleToAge || n.getSex() == Person.Sex.WOMAN && n.getAge() >= fromAge && n.getAge() <= femaleToAge)
+                .filter(n -> n.getSex() == Person.Sex.MAN && n.getAge() >= fromAge
+                        && n.getAge() <= maleToAge || n.getSex() == Person.Sex.WOMAN
+                        && n.getAge() >= fromAge && n.getAge() <= femaleToAge)
                 .collect(Collectors.toList());
 
         return result;
